@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Герой-секция -->
+    <div class="page-header">
+        <h1>Добро пожаловать на школьный новостной сайт!</h1>
+        <p>Здесь вы найдете последние новости, события и важные объявления нашей школы</p>
+    </div>
+
+    <!-- Изображение школы -->
+    <div class="text-center mb-5">
+        <img src="{{ url_for('static', filename='images/school_image.jpg') }}"
+             alt="Школа №35 г. Иркутска"
+             class="img-fluid rounded-3 shadow-lg"
+             style="max-height: 500px; width: 100%; object-fit: cover;">
+    </div>
+
+    <!-- Новости -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4" style="color: var(--primary-color);">
+            <i class="bi bi-newspaper me-2"></i>Последние новости
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary">Первая новость</h5>
+                        <p class="card-text">Узнайте о самых важных событиях этой недели в нашей школе.</p>
+                        <a href="/news/1" class="btn btn-primary-custom mt-2">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary">Вторая новость</h5>
+                        <p class="card-text">Достижения наших учеников и преподавателей.</p>
+                        <a href="/news/2" class="btn btn-primary-custom mt-2">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary">Третья новость</h5>
+                        <p class="card-text">Предстоящие мероприятия и важные даты.</p>
+                        <a href="/news/3" class="btn btn-primary-custom mt-2">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма обратной связи -->
+    <section class="mb-5 p-4 rounded-3" style="background-color: var(--light-bg);">
+        <h2 class="text-center mb-4" style="color: var(--primary-color);">
+            <i class="bi bi-envelope me-2"></i>Связаться с нами
+        </h2>
+        <form action="/submit_contact" method="POST" class="row g-3">
+            <div class="col-md-6">
+                <input type="text" name="name" class="form-control form-control-lg" placeholder="Ваше имя" required>
+            </div>
+            <div class="col-md-6">
+                <input type="email" name="email" class="form-control form-control-lg" placeholder="Ваш Email" required>
+            </div>
+            <div class="col-12">
+                <textarea name="message" class="form-control form-control-lg" rows="4" placeholder="Ваше сообщение" required></textarea>
+            </div>
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary-custom px-5">
+                    <i class="bi bi-send me-2"></i>Отправить сообщение
+                </button>
+            </div>
+        </form>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Анимация появления элементов
+    $(document).ready(function() {
+        $('.card').hide().fadeIn(1000);
+
+        // Плавная прокрутка для ссылок
+        $('a[href^="#"]').on('click', function(event) {
+            if (this.hash !== "") {
+                event.preventDefault();
+                const hash = this.hash;
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top - 100
+                }, 800);
+            }
+        });
+
+        // Анимация формы
+        $('input, textarea').focus(function() {
+            $(this).parent().addClass('focused');
+        }).blur(function() {
+            if (!$(this).val()) {
+                $(this).parent().removeClass('focused');
+            }
+        });
+    });
+</script>
+{% endblock %}
